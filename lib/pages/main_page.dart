@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/profile.dart';
 import '../theme/theme.dart';
 
 class MainPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
     Text('Задачи'),
     Text('Сегодня'),
     Text('Выполнено'),
-    Text('Профиль'),
+    ProfilePage(), // Используем ProfilePage для 4-го элемента
   ];
 
   void _onItemTapped(int index) {
