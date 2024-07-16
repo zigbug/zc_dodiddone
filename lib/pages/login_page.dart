@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
+import 'main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -95,7 +96,12 @@ class _LoginPageState extends State<LoginPage> {
 
               // Кнопка "Войти"
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainPage()));
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: !isLogin
                       ? DoDidDoneTheme.lightTheme.colorScheme.primary
