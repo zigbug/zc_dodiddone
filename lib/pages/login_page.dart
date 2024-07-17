@@ -38,6 +38,54 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/0qode_symbol_1.png', // Замените на правильный путь к файлу
+                    height: 60, // Устанавливаем высоту изображения
+                  ),
+                  const SizedBox(width: 8),
+                  // Добавляем текст "zerocoder"
+                  Text(
+                    'zerocoder',
+                    style: TextStyle(
+                      fontSize: 62,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Белый цвет текста
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              // Добавляем текст "Do"
+              RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Do',
+                      style: TextStyle(
+                        color: DoDidDoneTheme.lightTheme.colorScheme.primary,
+                      ),
+                    ),
+                    const TextSpan(
+                      text: 'Did',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    TextSpan(
+                      text: 'Done',
+                      style: TextStyle(
+                        color: DoDidDoneTheme.lightTheme.colorScheme.secondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
               // Заголовок
               Text(
                 isLogin ? 'Вход' : 'Регистрация',
@@ -50,8 +98,8 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 30),
 
               // Поле логина/почты
-              TextField(
-                decoration: const InputDecoration(
+              const TextField(
+                decoration: InputDecoration(
                   hintText: 'Почта',
                   filled: true,
                   fillColor: Colors.white,
@@ -64,9 +112,9 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
 
               // Поле пароля
-              TextField(
+              const TextField(
                 obscureText: true,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Пароль',
                   filled: true,
                   fillColor: Colors.white,
@@ -80,9 +128,9 @@ class _LoginPageState extends State<LoginPage> {
 
               // **Новое поле "Повторить пароль"**
               if (!isLogin) // Отображаем только при регистрации
-                TextField(
+                const TextField(
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Повторить пароль',
                     filled: true,
                     fillColor: Colors.white,
