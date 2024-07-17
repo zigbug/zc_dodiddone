@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../screens/all_tasks.dart';
 import '../screens/profile.dart';
 import '../theme/theme.dart';
@@ -24,6 +25,109 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  // Функция для показа диалога добавления задачи
+  void _showAddTaskDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        String _title = '';
+        String _description = '';
+        DateTime _deadline = DateTime.now();
+
+        return Dialog(
+          // Используем Dialog вместо AlertDialog для настройки ширины
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16), // Скругленные углы
+          ),
+          child: SizedBox(
+            width: 400, // Устанавливаем ширину диалога
+            child: Padding(
+              padding: const EdgeInsets.all(20.0), // Отступ для содержимого
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(labelText: 'Название'),
+                    onChanged: (value) {
+                      _title = value;
+                    },
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(labelText: 'Описание'),
+                    onChanged: (value) {
+                      _description = value;
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0), // Отступ сверху
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Открыть календарь для выбора даты и времени
+                        showDatePicker(
+                          context: context,
+                          initialDate: _deadline,
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 365)),
+                        ).then((pickedDate) {
+                          if (pickedDate != null) {
+                            // После выбора даты, открыть TimePicker
+                            showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.fromDateTime(_deadline),
+                            ).then((pickedTime) {
+                              if (pickedTime != null) {
+                                setState(() {
+                                  _deadline = DateTime(
+                                    pickedDate.year,
+                                    pickedDate.month,
+                                    pickedDate.day,
+                                    pickedTime.hour,
+                                    pickedTime.minute,
+                                  );
+                                });
+                              }
+                            });
+                          }
+                        });
+                      },
+                      child: Text(
+                          'Выбрать дедлайн: ${DateFormat('dd.MM.yy HH:mm').format(_deadline)}'),
+                    ),
+                  ),
+                  const SizedBox(height: 20), // Отступ снизу
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Отмена'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Обработка добавления задачи
+                          // Например, можно добавить задачу в список _tasks
+                          // и обновить состояние
+                          setState(() {
+                            // ...
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Добавить'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -72,6 +176,10 @@ class _MainPageState extends State<MainPage> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showAddTaskDialog,
+        child: const Icon(Icons.add),
       ),
     );
   }
